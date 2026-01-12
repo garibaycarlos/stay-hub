@@ -45,7 +45,7 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
         }
         catch (Exception ex)
         {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while retrieving villa with Id {id}: {ex.Message}");
+            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while retrieving villa with Id {id}", ex.Message);
 
             return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
         }
@@ -79,7 +79,7 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
         }
         catch (Exception ex)
         {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while creating the villa: {ex.Message}");
+            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while creating the villa", ex.Message);
 
             return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
         }
@@ -118,7 +118,7 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
         }
         catch (Exception ex)
         {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while updating the villa: {ex.Message}");
+            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while updating the villa", ex.Message);
 
             return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
         }
@@ -147,7 +147,7 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
         }
         catch (Exception ex)
         {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while deleting the villa: {ex.Message}");
+            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while deleting the villa", ex.Message);
 
             return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
         }
