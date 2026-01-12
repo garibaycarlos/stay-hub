@@ -15,6 +15,8 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
     private readonly IMapper _mapper = mapper;
 
     [HttpGet]
+    [ProducesResponseType(typeof(ApiResponse<IEnumerable<VillaDTO>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<IEnumerable<VillaDTO>>>> GetVillas()
     {
         var villas = await _db.Villa.ToListAsync();
@@ -26,6 +28,9 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
     }
 
     [HttpGet("{id:int}")]
+    [ProducesResponseType(typeof(ApiResponse<VillaDTO>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<VillaDTO>> GetVillaById(int id)
     {
         if (id <= 0) return NotFound(ApiResponse<object>.NotFound($"Villa with Id {id} was not found"));
@@ -47,6 +52,10 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(ApiResponse<VillaCreateDTO>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<VillaCreateDTO>>> CreateVilla(VillaCreateDTO villaDTO)
     {
         if (villaDTO is null) return BadRequest(ApiResponse<object>.BadRequest("Villa data is required"));
@@ -55,7 +64,7 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
         {
             var duplicateVilla = _db.Villa.FirstOrDefault(v => v.Name.ToLower() == villaDTO.Name.ToLower());
 
-            if (duplicateVilla is not null) return Conflict(ApiResponse<VillaCreateDTO>.Conflict($"A villa with the name '{villaDTO.Name}' already exists"));
+            if (duplicateVilla is not null) return Conflict(ApiResponse<object>.Conflict($"A villa with the name '{villaDTO.Name}' already exists"));
 
             var villa = _mapper.Map<Villa>(villaDTO);
 
@@ -77,6 +86,11 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
     }
 
     [HttpPut("{id:int}")]
+    [ProducesResponseType(typeof(ApiResponse<VillaDTO>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<VillaDTO>>> UpdateVilla(int id, VillaUpdateDTO villaDTO)
     {
         if (villaDTO is null) return BadRequest(ApiResponse<object>.BadRequest("Villa data is required"));
@@ -111,6 +125,9 @@ public class VillaController(ApplicationDbContext db, IMapper mapper) : Controll
     }
 
     [HttpDelete("{id:int}")]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<object>>> DeleteVilla(int id)
     {
         if (id <= 0) return NotFound(ApiResponse<object>.NotFound($"Villa with Id {id} was not found"));
