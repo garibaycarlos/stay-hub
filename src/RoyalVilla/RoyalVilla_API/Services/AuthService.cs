@@ -74,7 +74,7 @@ public class AuthService(ApplicationDbContext db, IMapper mapper, IConfiguration
 
     private string GenerateJwtToken(User user)
     {
-        var key = Encoding.ASCII.GetBytes(_configuration.GetSection("JwtSettings").GetValue<string>("Secret"));
+        var key = Encoding.ASCII.GetBytes(_configuration.GetSection("JwtSettings").GetValue<string>("Secret")!);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[] {
