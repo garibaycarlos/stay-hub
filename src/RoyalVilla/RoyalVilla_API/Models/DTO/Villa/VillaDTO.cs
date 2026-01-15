@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RoyalVilla_API.Models.DTO;
+namespace RoyalVilla_API.Models.DTO.Villa;
 
-public class VillaCreateDTO
+public class VillaDTO
 {
-    [Required]
-    [MaxLength(50)]
+    public int Id { get; set; }
     public required string Name { get; set; }
     public string? Details { get; set; }
     public double Rate { get; set; }

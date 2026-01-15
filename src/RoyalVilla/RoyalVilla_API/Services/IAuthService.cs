@@ -1,4 +1,4 @@
-﻿using RoyalVilla_API.Models.DTO;
+﻿using RoyalVilla_API.Models.DTO.Login;
 
 namespace RoyalVilla_API.Services;
 

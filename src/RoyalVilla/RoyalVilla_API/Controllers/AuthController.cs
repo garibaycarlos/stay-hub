@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RoyalVilla_API.Models.DTO;
+using RoyalVilla_API.Models.DTO.Login;
 using RoyalVilla_API.Services;
 
 namespace RoyalVilla_API.Controllers;
