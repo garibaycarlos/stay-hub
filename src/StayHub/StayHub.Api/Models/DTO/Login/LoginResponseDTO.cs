@@ -1,4 +1,4 @@
-﻿namespace StayHub.Api.Models.DTO.Login;
+﻿namespace SignatureSuites.Api.Models.DTO.Login;
 
 public class LoginResponseDTO
 {

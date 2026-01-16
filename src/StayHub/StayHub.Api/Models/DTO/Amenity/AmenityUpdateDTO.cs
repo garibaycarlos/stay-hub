@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StayHub.Api.Models.DTO.Property;
+namespace SignatureSuites.Api.Models.DTO.Amenity;
 
-public class PropertyUpdateDTO
+public class AmenityUpdateDTO
 {
     [Required]
     public int Id { get; set; }

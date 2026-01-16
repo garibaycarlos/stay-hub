@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using StayHub.Api.Data;
-using StayHub.Api.Models;
-using StayHub.Api.Models.DTO.Login;
-using StayHub.Api.Models.DTO.Property;
-using StayHub.Api.Services;
+using SignatureSuites.Api.Data;
+using SignatureSuites.Api.Models;
+using SignatureSuites.Api.Models.DTO.Login;
+using SignatureSuites.Api.Models.DTO.Suite;
+using SignatureSuites.Api.Services;
 using Scalar.AspNetCore;
 using System.Text;
 
@@ -70,10 +70,10 @@ builder.Services.AddOpenApi(options =>
 
 builder.Services.AddAutoMapper(o =>
 {
-    o.CreateMap<Property, PropertyDTO>().ReverseMap();
-    o.CreateMap<Property, PropertyCreateDTO>().ReverseMap();
-    o.CreateMap<Property, PropertyUpdateDTO>().ReverseMap();
-    o.CreateMap<PropertyUpdateDTO, PropertyDTO>().ReverseMap();
+    o.CreateMap<Suite, SuiteDTO>().ReverseMap();
+    o.CreateMap<Suite, SuiteCreateDTO>().ReverseMap();
+    o.CreateMap<Suite, SuiteUpdateDTO>().ReverseMap();
+    o.CreateMap<SuiteUpdateDTO, SuiteDTO>().ReverseMap();
     o.CreateMap<User, UserDTO>().ReverseMap();
 });
 

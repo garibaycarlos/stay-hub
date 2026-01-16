@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StayHub.Api.Data;
+using SignatureSuites.Api.Data;
 
 #nullable disable
 
-namespace StayHub.Api.Migrations
+namespace SignatureSuites.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260110015834_initial")]

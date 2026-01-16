@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StayHub.Api.Models;
+namespace SignatureSuites.Api.Models;
 
-public class Amenities
+public class Amenity
 {
     [Key]
     public int Id { get; set; }

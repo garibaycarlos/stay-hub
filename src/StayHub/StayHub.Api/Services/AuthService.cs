@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using StayHub.Api.Data;
-using StayHub.Api.Models;
-using StayHub.Api.Models.DTO.Login;
+using SignatureSuites.Api.Data;
+using SignatureSuites.Api.Models;
+using SignatureSuites.Api.Models.DTO.Login;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace StayHub.Api.Services;
+namespace SignatureSuites.Api.Services;
 
 public class AuthService(ApplicationDbContext db, IMapper mapper, IConfiguration configuration) : IAuthService
 {

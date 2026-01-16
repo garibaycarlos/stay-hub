@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace StayHub.Api.Migrations
+namespace SignatureSuites.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPropertyToDb : Migration
+    public partial class AddSuiteToDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Property",
+                name: "Suite",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -28,7 +28,7 @@ namespace StayHub.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Property", x => x.Id);
+                    table.PrimaryKey("PK_Suite", x => x.Id);
                 });
         }
 
@@ -36,7 +36,7 @@ namespace StayHub.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Property");
+                name: "Suite");
         }
     }
 }

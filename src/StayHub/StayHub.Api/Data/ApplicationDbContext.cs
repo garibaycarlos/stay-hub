@@ -1,20 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StayHub.Api.Models;
+using SignatureSuites.Api.Models;
 
-namespace StayHub.Api.Data;
+namespace SignatureSuites.Api.Data;
 
 public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<Property> Property { get; set; }
-    public DbSet<Amenities> Amenities { get; set; }
+    public DbSet<Suite> Suite { get; set; }
+    public DbSet<Amenity> Amenity { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Property>().HasData(
-            new Property
+        modelBuilder.Entity<Suite>().HasData(
+            new Suite
             {
                 Id = 1,
                 Name = "Royal Villa",
@@ -26,7 +26,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
                 CreatedDate = new DateTime(2024, 1, 1),
                 UpdatedDate = new DateTime(2024, 1, 1)
             },
-            new Property
+            new Suite
             {
                 Id = 2,
                 Name = "Diamond Villa",
@@ -38,7 +38,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
                 CreatedDate = new DateTime(2024, 1, 15),
                 UpdatedDate = new DateTime(2024, 1, 15)
             },
-            new Property
+            new Suite
             {
                 Id = 3,
                 Name = "Pool Villa",
@@ -50,7 +50,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
                 CreatedDate = new DateTime(2024, 2, 1),
                 UpdatedDate = new DateTime(2024, 2, 1)
             },
-            new Property
+            new Suite
             {
                 Id = 4,
                 Name = "Luxury Villa",
@@ -62,7 +62,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
                 CreatedDate = new DateTime(2024, 2, 14),
                 UpdatedDate = new DateTime(2024, 2, 14)
             },
-            new Property
+            new Suite
             {
                 Id = 5,
                 Name = "Garden Villa",

@@ -5,24 +5,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace StayHub.Api.Migrations
+namespace SignatureSuites.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedProperty : Migration
+    public partial class SeedSuite : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<DateTime>(
                 name: "UpdatedDate",
-                table: "Property",
+                table: "Suite",
                 type: "datetime2",
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
 
             migrationBuilder.InsertData(
-                table: "Property",
+                table: "Suite",
                 columns: new[] { "Id", "CreatedDate", "Details", "ImageUrl", "Name", "Occupancy", "Rate", "Sqft", "UpdatedDate" },
                 values: new object[,]
                 {
@@ -38,33 +38,33 @@ namespace StayHub.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
-                table: "Property",
+                table: "Suite",
                 keyColumn: "Id",
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
-                table: "Property",
+                table: "Suite",
                 keyColumn: "Id",
                 keyValue: 2);
 
             migrationBuilder.DeleteData(
-                table: "Property",
+                table: "Suite",
                 keyColumn: "Id",
                 keyValue: 3);
 
             migrationBuilder.DeleteData(
-                table: "Property",
+                table: "Suite",
                 keyColumn: "Id",
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
-                table: "Property",
+                table: "Suite",
                 keyColumn: "Id",
                 keyValue: 5);
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "UpdatedDate",
-                table: "Property",
+                table: "Suite",
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),

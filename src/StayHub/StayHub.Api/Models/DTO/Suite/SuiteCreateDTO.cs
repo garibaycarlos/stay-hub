@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StayHub.Api.Models.DTO.Amenities;
+namespace SignatureSuites.Api.Models.DTO.Suite;
 
-public class AmenitiesCreateDTO
+public class SuiteCreateDTO
 {
     [Required]
     [MaxLength(50)]

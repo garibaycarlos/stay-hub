@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+namespace SignatureSuites.Api.Models.DTO.Amenity;
 
-namespace StayHub.Api.Models.DTO.Property;
-
-public class PropertyCreateDTO
+public class AmenityDTO
 {
-    [Required]
-    [MaxLength(50)]
+    public int Id { get; set; }
     public required string Name { get; set; }
     public string? Details { get; set; }
     public double Rate { get; set; }

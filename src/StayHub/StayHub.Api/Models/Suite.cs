@@ -1,13 +1,18 @@
-﻿
-namespace StayHub.Api.Models.DTO.Amenities;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class AmenitiesDTO
+namespace SignatureSuites.Api.Models;
+
+public class Suite
 {
+    [Key]
     public int Id { get; set; }
+    [Required]
     public required string Name { get; set; }
     public string? Details { get; set; }
     public double Rate { get; set; }
     public int Sqft { get; set; }
     public int Occupancy { get; set; }
     public string? ImageUrl { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime? UpdatedDate { get; set; }
 }

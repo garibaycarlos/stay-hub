@@ -1,6 +1,6 @@
-﻿using StayHub.Api.Models.DTO.Login;
+﻿using SignatureSuites.Api.Models.DTO.Login;
 
-namespace StayHub.Api.Services;
+namespace SignatureSuites.Api.Services;
 
 public interface IAuthService
 {

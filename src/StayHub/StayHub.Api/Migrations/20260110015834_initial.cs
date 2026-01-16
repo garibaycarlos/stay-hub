@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace StayHub.Api.Migrations
+namespace SignatureSuites.Api.Migrations
 {
     /// <inheritdoc />
     public partial class initial : Migration

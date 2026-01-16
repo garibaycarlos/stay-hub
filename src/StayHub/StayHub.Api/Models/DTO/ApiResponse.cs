@@ -1,4 +1,4 @@
-﻿namespace StayHub.Api.Models.DTO;
+﻿namespace SignatureSuites.Api.Models.DTO;
 
 public class ApiResponse<TData>
 {

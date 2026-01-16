@@ -1,9 +1,13 @@
-﻿
-namespace StayHub.Api.Models.DTO.Property;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class PropertyDTO
+namespace SignatureSuites.Api.Models.DTO.Suite;
+
+public class SuiteUpdateDTO
 {
+    [Required]
     public int Id { get; set; }
+    [Required]
+    [MaxLength(50)]
     public required string Name { get; set; }
     public string? Details { get; set; }
     public double Rate { get; set; }

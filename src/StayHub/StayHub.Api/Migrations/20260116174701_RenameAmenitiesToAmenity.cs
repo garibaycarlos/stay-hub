@@ -6,13 +6,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SignatureSuites.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class AddAmenitiesToDb : Migration
+    public partial class RenameAmenitiesToAmenity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Amenities");
+
             migrationBuilder.CreateTable(
-                name: "Amenities",
+                name: "Amenity",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -24,7 +27,7 @@ namespace SignatureSuites.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Amenities", x => x.Id);
+                    table.PrimaryKey("PK_Amenity", x => x.Id);
                 });
         }
 
@@ -32,7 +35,23 @@ namespace SignatureSuites.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Amenities");
+                name: "Amenity");
+
+            migrationBuilder.CreateTable(
+                name: "Amenities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Amenities", x => x.Id);
+                });
         }
     }
 }

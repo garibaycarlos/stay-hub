@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StayHub.Api.Models
+namespace SignatureSuites.Api.Models
 {
     public class User
     {

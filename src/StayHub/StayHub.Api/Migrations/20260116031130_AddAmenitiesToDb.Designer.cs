@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StayHub.Api.Data;
+using SignatureSuites.Api.Data;
 
 #nullable disable
 
-namespace StayHub.Api.Migrations
+namespace SignatureSuites.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260116031130_AddAmenitiesToDb")]
@@ -25,7 +25,7 @@ namespace StayHub.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("StayHub.Api.Models.Amenities", b =>
+            modelBuilder.Entity("SignatureSuites.Api.Models.Amenities", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace StayHub.Api.Migrations
                     b.ToTable("Amenities");
                 });
 
-            modelBuilder.Entity("StayHub.Api.Models.Property", b =>
+            modelBuilder.Entity("SignatureSuites.Api.Models.Suite", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace StayHub.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Property");
+                    b.ToTable("Suite");
 
                     b.HasData(
                         new
@@ -152,7 +152,7 @@ namespace StayHub.Api.Migrations
                         });
                 });
 
-            modelBuilder.Entity("StayHub.Api.Models.User", b =>
+            modelBuilder.Entity("SignatureSuites.Api.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

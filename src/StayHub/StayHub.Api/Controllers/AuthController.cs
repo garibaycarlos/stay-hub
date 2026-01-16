@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StayHub.Api.Models.DTO;
-using StayHub.Api.Models.DTO.Login;
-using StayHub.Api.Services;
+using SignatureSuites.Api.Models.DTO;
+using SignatureSuites.Api.Models.DTO.Login;
+using SignatureSuites.Api.Services;
 
-namespace StayHub.Api.Controllers;
+namespace SignatureSuites.Api.Controllers;
 
 [Route("api/auth")]
 [ApiController]
