@@ -5,7 +5,7 @@ using Microsoft.OpenApi;
 using StayHub.Api.Data;
 using StayHub.Api.Models;
 using StayHub.Api.Models.DTO.Login;
-using StayHub.Api.Models.DTO.Villa;
+using StayHub.Api.Models.DTO.Property;
 using StayHub.Api.Services;
 using Scalar.AspNetCore;
 using System.Text;
@@ -70,10 +70,10 @@ builder.Services.AddOpenApi(options =>
 
 builder.Services.AddAutoMapper(o =>
 {
-    o.CreateMap<Villa, VillaDTO>().ReverseMap();
-    o.CreateMap<Villa, VillaCreateDTO>().ReverseMap();
-    o.CreateMap<Villa, VillaUpdateDTO>().ReverseMap();
-    o.CreateMap<VillaUpdateDTO, VillaDTO>().ReverseMap();
+    o.CreateMap<Property, PropertyDTO>().ReverseMap();
+    o.CreateMap<Property, PropertyCreateDTO>().ReverseMap();
+    o.CreateMap<Property, PropertyUpdateDTO>().ReverseMap();
+    o.CreateMap<PropertyUpdateDTO, PropertyDTO>().ReverseMap();
     o.CreateMap<User, UserDTO>().ReverseMap();
 });
 

@@ -2,7 +2,7 @@
 
 namespace StayHub.Api.Models;
 
-public class Villa
+public class Property
 {
     [Key]
     public int Id { get; set; }
@@ -15,6 +15,4 @@ public class Villa
     public string? ImageUrl { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime? UpdatedDate { get; set; }
-
-    public ICollection<VillaAmenities>? Amenities { get; set; }
 }

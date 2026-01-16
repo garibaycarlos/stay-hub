@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StayHub.Api.Models;
 
-public class VillaAmenities
+public class Amenities
 {
     [Key]
     public int Id { get; set; }
@@ -13,9 +12,4 @@ public class VillaAmenities
     public string? Description { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime UpdatedDate { get; set; }
-
-    [Required]
-    [ForeignKey(nameof(Villa))]
-    public int VillaId { get; set; }
-    public Villa? Villa { get; set; }
 }

@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StayHub.Api.Models.DTO.Villa;
+namespace StayHub.Api.Models.DTO.Property;
 
-public class VillaCreateDTO
+public class PropertyUpdateDTO
 {
+    [Required]
+    public int Id { get; set; }
     [Required]
     [MaxLength(50)]
     public required string Name { get; set; }

@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+namespace StayHub.Api.Models.DTO.Property;
 
-namespace StayHub.Api.Models.DTO.Villa;
-
-public class VillaDTO
+public class PropertyDTO
 {
     public int Id { get; set; }
     public required string Name { get; set; }

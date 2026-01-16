@@ -62,7 +62,7 @@ namespace StayHub.Api.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("StayHub.Api.Models.Villa", b =>
+            modelBuilder.Entity("StayHub.Api.Models.Property", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace StayHub.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Villa");
+                    b.ToTable("Property");
 
                     b.HasData(
                         new

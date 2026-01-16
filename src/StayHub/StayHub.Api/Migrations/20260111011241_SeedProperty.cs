@@ -8,21 +8,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StayHub.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedVilla : Migration
+    public partial class SeedProperty : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<DateTime>(
                 name: "UpdatedDate",
-                table: "Villa",
+                table: "Property",
                 type: "datetime2",
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
 
             migrationBuilder.InsertData(
-                table: "Villa",
+                table: "Property",
                 columns: new[] { "Id", "CreatedDate", "Details", "ImageUrl", "Name", "Occupancy", "Rate", "Sqft", "UpdatedDate" },
                 values: new object[,]
                 {
@@ -38,33 +38,33 @@ namespace StayHub.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
-                table: "Villa",
+                table: "Property",
                 keyColumn: "Id",
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
-                table: "Villa",
+                table: "Property",
                 keyColumn: "Id",
                 keyValue: 2);
 
             migrationBuilder.DeleteData(
-                table: "Villa",
+                table: "Property",
                 keyColumn: "Id",
                 keyValue: 3);
 
             migrationBuilder.DeleteData(
-                table: "Villa",
+                table: "Property",
                 keyColumn: "Id",
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
-                table: "Villa",
+                table: "Property",
                 keyColumn: "Id",
                 keyValue: 5);
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "UpdatedDate",
-                table: "Villa",
+                table: "Property",
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),

@@ -22,7 +22,7 @@ namespace StayHub.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("StayHub.Api.Models.User", b =>
+            modelBuilder.Entity("StayHub.Api.Models.Amenities", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,8 +33,7 @@ namespace StayHub.Api.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -42,24 +41,15 @@ namespace StayHub.Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("UpdatedDate")
+                    b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Amenities");
                 });
 
-            modelBuilder.Entity("StayHub.Api.Models.Villa", b =>
+            modelBuilder.Entity("StayHub.Api.Models.Property", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +84,7 @@ namespace StayHub.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Villa");
+                    b.ToTable("Property");
 
                     b.HasData(
                         new
@@ -159,7 +149,7 @@ namespace StayHub.Api.Migrations
                         });
                 });
 
-            modelBuilder.Entity("StayHub.Api.Models.VillaAmenities", b =>
+            modelBuilder.Entity("StayHub.Api.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -170,7 +160,8 @@ namespace StayHub.Api.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -178,33 +169,21 @@ namespace StayHub.Api.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VillaId")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VillaId");
-
-                    b.ToTable("VillaAmenities");
-                });
-
-            modelBuilder.Entity("StayHub.Api.Models.VillaAmenities", b =>
-                {
-                    b.HasOne("StayHub.Api.Models.Villa", "Villa")
-                        .WithMany("Amenities")
-                        .HasForeignKey("VillaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Villa");
-                });
-
-            modelBuilder.Entity("StayHub.Api.Models.Villa", b =>
-                {
-                    b.Navigation("Amenities");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,8 @@ using StayHub.Api.Data;
 namespace StayHub.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260111005210_AddVillaToDb")]
-    partial class AddVillaToDb
+    [Migration("20260111005210_AddPropertyToDb")]
+    partial class AddPropertyToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace StayHub.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("StayHub.Api.Models.Villa", b =>
+            modelBuilder.Entity("StayHub.Api.Models.Property", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +60,7 @@ namespace StayHub.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Villa");
+                    b.ToTable("Property");
                 });
 #pragma warning restore 612, 618
         }

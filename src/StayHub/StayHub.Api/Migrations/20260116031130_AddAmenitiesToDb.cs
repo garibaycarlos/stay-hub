@@ -6,29 +6,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StayHub.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class AddVillaToDb : Migration
+    public partial class AddAmenitiesToDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Villa",
+                name: "Amenities",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rate = table.Column<double>(type: "float", nullable: false),
-                    Sqft = table.Column<int>(type: "int", nullable: false),
-                    Occupancy = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Villa", x => x.Id);
+                    table.PrimaryKey("PK_Amenities", x => x.Id);
                 });
         }
 
@@ -36,7 +32,7 @@ namespace StayHub.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Villa");
+                name: "Amenities");
         }
     }
 }

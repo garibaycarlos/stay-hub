@@ -5,16 +5,16 @@ namespace StayHub.Api.Data;
 
 public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
 {
-    public DbSet<Villa> Villa { get; set; }
     public DbSet<User> Users { get; set; }
-    public DbSet<VillaAmenities> VillaAmenities { get; set; }
+    public DbSet<Property> Property { get; set; }
+    public DbSet<Amenities> Amenities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Villa>().HasData(
-            new Villa
+        modelBuilder.Entity<Property>().HasData(
+            new Property
             {
                 Id = 1,
                 Name = "Royal Villa",
@@ -26,7 +26,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
                 CreatedDate = new DateTime(2024, 1, 1),
                 UpdatedDate = new DateTime(2024, 1, 1)
             },
-            new Villa
+            new Property
             {
                 Id = 2,
                 Name = "Diamond Villa",
@@ -38,7 +38,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
                 CreatedDate = new DateTime(2024, 1, 15),
                 UpdatedDate = new DateTime(2024, 1, 15)
             },
-            new Villa
+            new Property
             {
                 Id = 3,
                 Name = "Pool Villa",
@@ -50,7 +50,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
                 CreatedDate = new DateTime(2024, 2, 1),
                 UpdatedDate = new DateTime(2024, 2, 1)
             },
-            new Villa
+            new Property
             {
                 Id = 4,
                 Name = "Luxury Villa",
@@ -62,7 +62,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
                 CreatedDate = new DateTime(2024, 2, 14),
                 UpdatedDate = new DateTime(2024, 2, 14)
             },
-            new Villa
+            new Property
             {
                 Id = 5,
                 Name = "Garden Villa",
