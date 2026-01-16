@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RoyalVilla_API.Data;
+using StayHub.Api.Data;
 
 #nullable disable
 
-namespace RoyalVilla_API.Migrations
+namespace StayHub.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260111011241_SeedVilla")]
@@ -25,7 +25,7 @@ namespace RoyalVilla_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RoyalVilla_API.Models.Villa", b =>
+            modelBuilder.Entity("StayHub.Api.Models.Villa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

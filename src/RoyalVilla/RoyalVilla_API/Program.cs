@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using RoyalVilla_API.Data;
-using RoyalVilla_API.Models;
-using RoyalVilla_API.Models.DTO.Login;
-using RoyalVilla_API.Models.DTO.Villa;
-using RoyalVilla_API.Services;
+using StayHub.Api.Data;
+using StayHub.Api.Models;
+using StayHub.Api.Models.DTO.Login;
+using StayHub.Api.Models.DTO.Villa;
+using StayHub.Api.Services;
 using Scalar.AspNetCore;
 using System.Text;
 

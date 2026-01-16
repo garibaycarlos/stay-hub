@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RoyalVilla_API.Data;
-using RoyalVilla_API.Models;
-using RoyalVilla_API.Models.DTO;
-using RoyalVilla_API.Models.DTO.Villa;
+using StayHub.Api.Data;
+using StayHub.Api.Models;
+using StayHub.Api.Models.DTO;
+using StayHub.Api.Models.DTO.Villa;
 
-namespace RoyalVilla_API.Controllers;
+namespace StayHub.Api.Controllers;
 
 [ApiController]
 [Route("api/villa")]

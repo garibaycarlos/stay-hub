@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RoyalVilla_API.Models.DTO;
-using RoyalVilla_API.Models.DTO.Login;
-using RoyalVilla_API.Services;
+using StayHub.Api.Models.DTO;
+using StayHub.Api.Models.DTO.Login;
+using StayHub.Api.Services;
 
-namespace RoyalVilla_API.Controllers;
+namespace StayHub.Api.Controllers;
 
 [Route("api/auth")]
 [ApiController]

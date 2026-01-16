@@ -1,4 +1,4 @@
-﻿namespace RoyalVilla_API.Models.DTO;
+﻿namespace StayHub.Api.Models.DTO;
 
 public class ApiResponse<TData>
 {

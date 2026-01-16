@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RoyalVilla_API.Models;
+using StayHub.Api.Models;
 
-namespace RoyalVilla_API.Data;
+namespace StayHub.Api.Data;
 
 public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RoyalVilla_API.Models.DTO.Villa;
+namespace StayHub.Api.Models.DTO.Villa;
 
 public class VillaCreateDTO
 {

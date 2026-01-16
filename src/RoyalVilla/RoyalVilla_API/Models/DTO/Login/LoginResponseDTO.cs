@@ -1,4 +1,4 @@
-﻿namespace RoyalVilla_API.Models.DTO.Login;
+﻿namespace StayHub.Api.Models.DTO.Login;
 
 public class LoginResponseDTO
 {

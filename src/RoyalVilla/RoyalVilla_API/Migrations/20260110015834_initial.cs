@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace RoyalVilla_API.Migrations
+namespace StayHub.Api.Migrations
 {
     /// <inheritdoc />
     public partial class initial : Migration

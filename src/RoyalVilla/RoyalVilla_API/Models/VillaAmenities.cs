@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RoyalVilla_API.Models;
+namespace StayHub.Api.Models;
 
 public class VillaAmenities
 {

@@ -1,6 +1,6 @@
-﻿using RoyalVilla_API.Models.DTO.Login;
+﻿using StayHub.Api.Models.DTO.Login;
 
-namespace RoyalVilla_API.Services;
+namespace StayHub.Api.Services;
 
 public interface IAuthService
 {

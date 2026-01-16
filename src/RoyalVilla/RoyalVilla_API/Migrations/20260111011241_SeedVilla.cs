@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace RoyalVilla_API.Migrations
+namespace StayHub.Api.Migrations
 {
     /// <inheritdoc />
     public partial class SeedVilla : Migration

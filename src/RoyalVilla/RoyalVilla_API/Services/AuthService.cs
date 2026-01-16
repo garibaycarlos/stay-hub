@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using RoyalVilla_API.Data;
-using RoyalVilla_API.Models;
-using RoyalVilla_API.Models.DTO.Login;
+using StayHub.Api.Data;
+using StayHub.Api.Models;
+using StayHub.Api.Models.DTO.Login;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace RoyalVilla_API.Services;
+namespace StayHub.Api.Services;
 
 public class AuthService(ApplicationDbContext db, IMapper mapper, IConfiguration configuration) : IAuthService
 {

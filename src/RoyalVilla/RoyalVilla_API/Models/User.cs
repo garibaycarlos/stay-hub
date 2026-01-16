@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RoyalVilla_API.Models
+namespace StayHub.Api.Models
 {
     public class User
     {
