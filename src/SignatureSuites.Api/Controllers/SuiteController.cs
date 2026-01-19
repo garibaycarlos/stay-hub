@@ -20,12 +20,12 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<SuiteDTO>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<IEnumerable<SuiteDTO>>>> GetProperties()
+    public async Task<ActionResult<ApiResponse<IEnumerable<SuiteDTO>>>> GetSuites()
     {
-        var propertiess = await _db.Suite.ToListAsync();
-        var dtoResponseSuite = _mapper.Map<IEnumerable<SuiteDTO>>(propertiess);
+        var suites = await _db.Suite.ToListAsync();
+        var dtoResponseSuite = _mapper.Map<IEnumerable<SuiteDTO>>(suites);
 
-        var response = ApiResponse<IEnumerable<SuiteDTO>>.Ok(dtoResponseSuite, "Properties retrieved successfully");
+        var response = ApiResponse<IEnumerable<SuiteDTO>>.Ok(dtoResponseSuite, "Suites retrieved successfully");
 
         return Ok(response);
     }
@@ -40,15 +40,15 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
 
         try
         {
-            var properties = await _db.Suite.FindAsync(id);
+            var suite = await _db.Suite.FindAsync(id);
 
-            if (properties is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
+            if (suite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
 
-            return Ok(ApiResponse<SuiteDTO>.Ok(_mapper.Map<SuiteDTO>(properties), "Records retrieved successfully"));
+            return Ok(ApiResponse<SuiteDTO>.Ok(_mapper.Map<SuiteDTO>(suite), "Records retrieved successfully"));
         }
         catch (Exception ex)
         {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while retrieving properties with Id {id}", ex.Message);
+            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while retrieving suite with Id {id}", ex.Message);
 
             return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
         }
@@ -60,30 +60,30 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<SuiteCreateDTO>>> CreateSuite(SuiteCreateDTO propertiesDTO)
+    public async Task<ActionResult<ApiResponse<SuiteCreateDTO>>> CreateSuite(SuiteCreateDTO suiteDTO)
     {
-        if (propertiesDTO is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
+        if (suiteDTO is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
 
         try
         {
-            var duplicateSuite = _db.Suite.FirstOrDefault(v => v.Name.ToLower() == propertiesDTO.Name.ToLower());
+            var duplicateSuite = _db.Suite.FirstOrDefault(v => v.Name.ToLower() == suiteDTO.Name.ToLower());
 
-            if (duplicateSuite is not null) return Conflict(ApiResponse<object>.Conflict($"A properties with the name '{propertiesDTO.Name}' already exists"));
+            if (duplicateSuite is not null) return Conflict(ApiResponse<object>.Conflict($"A suite with the name '{suiteDTO.Name}' already exists"));
 
-            var properties = _mapper.Map<Suite>(propertiesDTO);
+            var suite = _mapper.Map<Suite>(suiteDTO);
 
-            properties.CreatedDate = DateTime.UtcNow;
+            suite.CreatedDate = DateTime.UtcNow;
 
-            await _db.Suite.AddAsync(properties);
+            await _db.Suite.AddAsync(suite);
             await _db.SaveChangesAsync();
 
-            var response = ApiResponse<SuiteDTO>.CreatedAt(_mapper.Map<SuiteDTO>(properties), "Suite created successfully");
+            var response = ApiResponse<SuiteDTO>.CreatedAt(_mapper.Map<SuiteDTO>(suite), "Suite created successfully");
 
-            return CreatedAtAction(nameof(CreateSuite), new { id = properties.Id }, response);
+            return CreatedAtAction(nameof(CreateSuite), new { id = suite.Id }, response);
         }
         catch (Exception ex)
         {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while creating the properties", ex.Message);
+            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while creating the suite", ex.Message);
 
             return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
         }
@@ -96,10 +96,10 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<SuiteDTO>>> UpdateSuite(int id, SuiteUpdateDTO propertiesDTO)
+    public async Task<ActionResult<ApiResponse<SuiteDTO>>> UpdateSuite(int id, SuiteUpdateDTO suiteDTO)
     {
-        if (propertiesDTO is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
-        if (id != propertiesDTO.Id) return BadRequest(ApiResponse<object>.BadRequest("Suite Id in URL does not match Suite Id in request body"));
+        if (suiteDTO is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
+        if (id != suiteDTO.Id) return BadRequest(ApiResponse<object>.BadRequest("Suite Id in URL does not match Suite Id in request body"));
 
         try
         {
@@ -107,23 +107,23 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
 
             if (existingSuite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
 
-            var duplicateSuite = _db.Suite.FirstOrDefault(v => v.Name.ToLower() == propertiesDTO.Name.ToLower() && v.Id != id);
+            var duplicateSuite = _db.Suite.FirstOrDefault(v => v.Name.ToLower() == suiteDTO.Name.ToLower() && v.Id != id);
 
-            if (duplicateSuite is not null) return Conflict(ApiResponse<SuiteCreateDTO>.Conflict($"A properties with the name '{propertiesDTO.Name}' already exists"));
+            if (duplicateSuite is not null) return Conflict(ApiResponse<SuiteCreateDTO>.Conflict($"A suite with the name '{suiteDTO.Name}' already exists"));
 
-            _mapper.Map(propertiesDTO, existingSuite);
+            _mapper.Map(suiteDTO, existingSuite);
 
             existingSuite.UpdatedDate = DateTime.UtcNow;
 
             await _db.SaveChangesAsync();
 
-            var response = ApiResponse<SuiteDTO>.Ok(_mapper.Map<SuiteDTO>(propertiesDTO), "Suite updated successfully");
+            var response = ApiResponse<SuiteDTO>.Ok(_mapper.Map<SuiteDTO>(suiteDTO), "Suite updated successfully");
 
-            return Ok(propertiesDTO);
+            return Ok(suiteDTO);
         }
         catch (Exception ex)
         {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while updating the properties", ex.Message);
+            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while updating the suite", ex.Message);
 
             return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
         }
@@ -153,7 +153,7 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
         }
         catch (Exception ex)
         {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while deleting the properties", ex.Message);
+            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while deleting the suite", ex.Message);
 
             return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
         }
