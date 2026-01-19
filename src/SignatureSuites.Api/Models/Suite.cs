@@ -15,4 +15,5 @@ public class Suite
     public string? ImageUrl { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime? UpdatedDate { get; set; }
+    public ICollection<SuiteAmenity> SuiteAmenities { get; set; } = new List<SuiteAmenity>();
 }

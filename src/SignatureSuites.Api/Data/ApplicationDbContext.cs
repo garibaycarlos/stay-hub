@@ -8,10 +8,24 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<User> Users { get; set; }
     public DbSet<Suite> Suite { get; set; }
     public DbSet<Amenity> Amenity { get; set; }
+    public DbSet<SuiteAmenity> SuiteAmenities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<SuiteAmenity>()
+    .HasKey(pa => new { pa.SuiteId, pa.AmenityId });
+
+        modelBuilder.Entity<SuiteAmenity>()
+            .HasOne(pa => pa.Suite)
+            .WithMany(p => p.SuiteAmenities)
+            .HasForeignKey(pa => pa.SuiteId);
+
+        modelBuilder.Entity<SuiteAmenity>()
+            .HasOne(pa => pa.Amenity)
+            .WithMany(a => a.SuiteAmenities)
+            .HasForeignKey(pa => pa.AmenityId);
 
         modelBuilder.Entity<Suite>().HasData(
             new Suite
