@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Scalar.AspNetCore;
 using SignatureSuites.Api.Data;
 using SignatureSuites.Api.Models;
-using SignatureSuites.Api.Models.DTO.Login;
-using SignatureSuites.Api.Models.DTO.Suite;
+using SignatureSuites.Api.Models.Dto.Amenity;
+using SignatureSuites.Api.Models.Dto.Login;
+using SignatureSuites.Api.Models.Dto.Suite;
 using SignatureSuites.Api.Services;
-using Scalar.AspNetCore;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,11 +71,23 @@ builder.Services.AddOpenApi(options =>
 
 builder.Services.AddAutoMapper(o =>
 {
-    o.CreateMap<Suite, SuiteDTO>().ReverseMap();
-    o.CreateMap<Suite, SuiteCreateDTO>().ReverseMap();
-    o.CreateMap<Suite, SuiteUpdateDTO>().ReverseMap();
-    o.CreateMap<SuiteUpdateDTO, SuiteDTO>().ReverseMap();
-    o.CreateMap<User, UserDTO>().ReverseMap();
+    // Suite
+    o.CreateMap<Suite, SuiteDto>()
+        .ForMember(dest => dest.Amenities,
+            opt => opt.MapFrom(src =>
+                src.SuiteAmenities.Select(sa => sa.Amenity)));
+
+    o.CreateMap<Suite, SuiteCreateDto>().ReverseMap();
+    o.CreateMap<Suite, SuiteUpdateDto>().ReverseMap();
+    o.CreateMap<SuiteUpdateDto, SuiteDto>().ReverseMap();
+
+    // Amenity
+    o.CreateMap<Amenity, AmenityDto>().ReverseMap();
+    o.CreateMap<Amenity, AmenityCreateDto>().ReverseMap();
+    o.CreateMap<Amenity, AmenityUpdateDto>().ReverseMap();
+
+    // Login
+    o.CreateMap<User, UserDto>().ReverseMap();
 });
 
 builder.Services.AddScoped<IAuthService, AuthService>();
