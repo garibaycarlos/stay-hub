@@ -1,13 +1,9 @@
 ﻿
-namespace SignatureSuites.Api.Models.DTO.Amenity;
+namespace SignatureSuites.Api.Models.Dto.Amenity;
 
-public class AmenityDTO
+public class AmenityDto
 {
     public int Id { get; set; }
     public required string Name { get; set; }
-    public string? Details { get; set; }
-    public double Rate { get; set; }
-    public int Sqft { get; set; }
-    public int Occupancy { get; set; }
-    public string? ImageUrl { get; set; }
+    public string? Description { get; set; }
 }

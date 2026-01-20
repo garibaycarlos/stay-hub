@@ -1,17 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SignatureSuites.Api.Models.DTO.Amenity;
+namespace SignatureSuites.Api.Models.Dto.Amenity;
 
-public class AmenityUpdateDTO
+public class AmenityUpdateDto
 {
     [Required]
     public int Id { get; set; }
     [Required]
-    [MaxLength(50)]
+    [MaxLength(100)]
     public required string Name { get; set; }
-    public string? Details { get; set; }
-    public double Rate { get; set; }
-    public int Sqft { get; set; }
-    public int Occupancy { get; set; }
-    public string? ImageUrl { get; set; }
+    public string? Description { get; set; }
 }
