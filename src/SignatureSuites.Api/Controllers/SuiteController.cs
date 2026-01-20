@@ -28,7 +28,6 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     /// </returns>
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<SuiteDto>>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<IEnumerable<SuiteDto>>>> GetAllSuites()
     {
         var suites = await QuerySuitesWithAmenities()
@@ -50,7 +49,6 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(ApiResponse<SuiteDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<SuiteDto>>> GetSuiteById(int id)
     {
         if (id <= 0) return BadRequest(ApiResponse<object>.BadRequest("Invalid suite Id"));
@@ -76,7 +74,6 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [ProducesResponseType(typeof(ApiResponse<SuiteDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<SuiteDto>>> CreateSuite(SuiteCreateDto suiteCreateDto)
     {
         if (suiteCreateDto is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
@@ -109,7 +106,6 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<SuiteDto>>> UpdateSuite(int id, SuiteUpdateDto suiteUpdateDto)
     {
         if (suiteUpdateDto is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
@@ -145,7 +141,6 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<object>>> DeleteSuite(int id)
     {
         if (id <= 0) return BadRequest(ApiResponse<object>.BadRequest("Invalid suite Id"));
