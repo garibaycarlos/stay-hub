@@ -35,7 +35,6 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
                 .AsNoTracking()
                 .ToListAsync();
         var suitesDto = _mapper.Map<IEnumerable<SuiteDto>>(suites);
-
         var response = ApiResponse<IEnumerable<SuiteDto>>.Ok(suitesDto, "Suites retrieved successfully");
 
         return Ok(response);
@@ -87,8 +86,6 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
         if (suiteExists) return Conflict(ApiResponse<object>.Conflict($"A suite with the name '{suiteCreateDto.Name}' already exists"));
 
         var suite = _mapper.Map<Suite>(suiteCreateDto);
-
-        suite.CreatedDate = DateTime.UtcNow;
 
         await _db.Suites.AddAsync(suite);
         await _db.SaveChangesAsync();
