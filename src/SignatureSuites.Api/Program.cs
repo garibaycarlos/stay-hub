@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 using SignatureSuites.Api.Data;
 using SignatureSuites.Api.Models;
+using SignatureSuites.Api.Models.Dto;
 using SignatureSuites.Api.Models.Dto.Amenity;
 using SignatureSuites.Api.Models.Dto.Login;
 using SignatureSuites.Api.Models.Dto.Suite;
@@ -102,6 +104,26 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+app.UseExceptionHandler(appError =>
+{
+    appError.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/json";
+
+        var exceptionHandlerPathFeature =
+            context.Features.Get<IExceptionHandlerPathFeature>();
+
+        var response = ApiResponse<object>.Error(
+            StatusCodes.Status500InternalServerError,
+            "An unexpected error occurred",
+            exceptionHandlerPathFeature?.Error.Message
+        );
+
+        await context.Response.WriteAsJsonAsync(response);
+    });
+});
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
