@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SignatureSuites.Api.Models.DTO.Suite;
+namespace SignatureSuites.Api.Models.Dto.Suite;
 
-public class SuiteUpdateDTO
+public class SuiteUpdateDto
 {
     [Required]
     public int Id { get; set; }
@@ -10,7 +10,7 @@ public class SuiteUpdateDTO
     [MaxLength(50)]
     public required string Name { get; set; }
     public string? Details { get; set; }
-    public double Rate { get; set; }
+    public decimal Rate { get; set; }
     public int Sqft { get; set; }
     public int Occupancy { get; set; }
     public string? ImageUrl { get; set; }
