@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace SignatureSuites.Api.Models.Dto.Login;
 
-namespace SignatureSuites.Api.Models.DTO.Login;
-
-public class UserDTO
+public class UserDto
 {
     public string? Email { get; set; }
 

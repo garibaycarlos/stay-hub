@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SignatureSuites.Api.Models.DTO.Login;
+namespace SignatureSuites.Api.Models.Dto.Login;
 
-public class RegistrationRequestDTO
+public class RegistrationRequestDto
 {
     [Required]
     [EmailAddress]

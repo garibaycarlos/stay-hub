@@ -1,7 +1,7 @@
-﻿namespace SignatureSuites.Api.Models.DTO.Login;
+﻿namespace SignatureSuites.Api.Models.Dto.Login;
 
-public class LoginResponseDTO
+public class LoginResponseDto
 {
     public string? Token { get; set; }
-    public UserDTO? UserDTO { get; set; }
+    public UserDto? UserDto { get; set; }
 }
