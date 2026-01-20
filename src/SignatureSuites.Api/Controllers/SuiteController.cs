@@ -14,7 +14,7 @@ namespace SignatureSuites.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/suites")]
-//[Authorize(Roles = "Admin,Customer")]
+[Authorize(Roles = "Admin,Customer")]
 public class SuiteController(ApplicationDbContext db, IMapper mapper) : ControllerBase
 {
     private readonly ApplicationDbContext _db = db;
@@ -31,10 +31,9 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<IEnumerable<SuiteDto>>>> GetAllSuites()
     {
-        var suites = await _db.Suites.AsNoTracking()
-                            .Include(sa => sa.SuiteAmenities)
-                            .ThenInclude(a => a.Amenity)
-                            .ToListAsync();
+        var suites = await QuerySuitesWithAmenities()
+                .AsNoTracking()
+                .ToListAsync();
         var suitesDto = _mapper.Map<IEnumerable<SuiteDto>>(suites);
 
         var response = ApiResponse<IEnumerable<SuiteDto>>.Ok(suitesDto, "Suites retrieved successfully");
@@ -53,27 +52,17 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [ProducesResponseType(typeof(ApiResponse<SuiteDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<SuiteDto>> GetSuiteById(int id)
+    public async Task<ActionResult<ApiResponse<SuiteDto>>> GetSuiteById(int id)
     {
         if (id <= 0) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
 
-        try
-        {
-            var suite = await _db.Suites.AsNoTracking()
-                            .Include(sa => sa.SuiteAmenities)
-                            .ThenInclude(a => a.Amenity)
-                            .FirstOrDefaultAsync(s => s.Id == id);
+        var suite = await QuerySuitesWithAmenities()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(s => s.Id == id);
 
-            if (suite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
+        if (suite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
 
-            return Ok(ApiResponse<SuiteDto>.Ok(_mapper.Map<SuiteDto>(suite), "Suites retrieved successfully"));
-        }
-        catch (Exception ex)
-        {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while retrieving suite with Id {id}", ex.Message);
-
-            return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-        }
+        return Ok(ApiResponse<SuiteDto>.Ok(_mapper.Map<SuiteDto>(suite), "Suite retrieved successfully"));
     }
 
     /// <summary>
@@ -93,29 +82,20 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     {
         if (suiteCreateDto is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
 
-        try
-        {
-            var suiteExists = await _db.Suites.AnyAsync(v => v.Name.ToLower() == suiteCreateDto.Name.ToLower());
+        var suiteExists = await _db.Suites.AnyAsync(v => v.Name.ToLowerInvariant() == suiteCreateDto.Name.ToLowerInvariant());
 
-            if (suiteExists) return Conflict(ApiResponse<object>.Conflict($"A suite with the name '{suiteCreateDto.Name}' already exists"));
+        if (suiteExists) return Conflict(ApiResponse<object>.Conflict($"A suite with the name '{suiteCreateDto.Name}' already exists"));
 
-            var suite = _mapper.Map<Suite>(suiteCreateDto);
+        var suite = _mapper.Map<Suite>(suiteCreateDto);
 
-            suite.CreatedDate = DateTime.UtcNow;
+        suite.CreatedDate = DateTime.UtcNow;
 
-            await _db.Suites.AddAsync(suite);
-            await _db.SaveChangesAsync();
+        await _db.Suites.AddAsync(suite);
+        await _db.SaveChangesAsync();
 
-            var response = ApiResponse<SuiteDto>.CreatedAt(_mapper.Map<SuiteDto>(suite), "Suite created successfully");
+        var response = ApiResponse<SuiteDto>.CreatedAt(_mapper.Map<SuiteDto>(suite), "Suite created successfully");
 
-            return CreatedAtAction(nameof(GetSuiteById), new { id = suite.Id }, response);
-        }
-        catch (Exception ex)
-        {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while creating the suite", ex.Message);
-
-            return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-        }
+        return CreatedAtAction(nameof(GetSuiteById), new { id = suite.Id }, response);
     }
 
     /// <summary>
@@ -127,7 +107,7 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     /// A standardized API response containing the updated suite.
     /// </returns>
     [HttpPut("{id:int}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(ApiResponse<SuiteDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
@@ -138,32 +118,23 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
         if (suiteUpdateDto is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
         if (id != suiteUpdateDto.Id) return BadRequest(ApiResponse<object>.BadRequest("Suite Id in URL does not match Suite Id in request body"));
 
-        try
-        {
-            var existingSuite = await _db.Suites.FindAsync(id);
+        var existingSuite = await _db.Suites.FindAsync(id);
 
-            if (existingSuite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
+        if (existingSuite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
 
-            var suiteNameExists = await _db.Suites.AnyAsync(v => v.Name.ToLower() == suiteUpdateDto.Name.ToLower() && v.Id != id);
+        var suiteNameExists = await _db.Suites.AnyAsync(v => v.Name.ToLowerInvariant() == suiteUpdateDto.Name.ToLowerInvariant() && v.Id != id);
 
-            if (suiteNameExists) return Conflict(ApiResponse<SuiteCreateDto>.Conflict($"A suite with the name '{suiteUpdateDto.Name}' already exists"));
+        if (suiteNameExists) return Conflict(ApiResponse<SuiteCreateDto>.Conflict($"A suite with the name '{suiteUpdateDto.Name}' already exists"));
 
-            _mapper.Map(suiteUpdateDto, existingSuite);
+        _mapper.Map(suiteUpdateDto, existingSuite);
 
-            existingSuite.UpdatedDate = DateTime.UtcNow;
+        existingSuite.UpdatedDate = DateTime.UtcNow;
 
-            await _db.SaveChangesAsync();
+        await _db.SaveChangesAsync();
 
-            var response = ApiResponse<SuiteDto>.Ok(_mapper.Map<SuiteDto>(existingSuite), "Suite updated successfully");
+        var response = ApiResponse<SuiteDto>.Ok(_mapper.Map<SuiteDto>(existingSuite), "Suite updated successfully");
 
-            return Ok(response);
-        }
-        catch (Exception ex)
-        {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while updating the suite", ex.Message);
-
-            return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-        }
+        return Ok(response);
     }
 
     /// <summary>
@@ -174,30 +145,28 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     /// A standardized API response indicating the result of the deletion.
     /// </returns>
     [HttpDelete("{id:int}")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<object>>> DeleteSuite(int id)
     {
-        if (id <= 0) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
+        if (id <= 0) return BadRequest(ApiResponse<object>.BadRequest("Invalid suite Id"));
 
-        try
-        {
-            var existingSuite = await _db.Suites.FindAsync(id);
+        var existingSuite = await _db.Suites.FindAsync(id);
 
-            if (existingSuite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
+        if (existingSuite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
 
-            _db.Suites.Remove(existingSuite);
-            await _db.SaveChangesAsync();
+        _db.Suites.Remove(existingSuite);
+        await _db.SaveChangesAsync();
 
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            var errorResponse = ApiResponse<object>.Error(StatusCodes.Status500InternalServerError, $"An error occurred while deleting the suite", ex.Message);
+        return NoContent();
+    }
 
-            return StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-        }
+    private IQueryable<Suite> QuerySuitesWithAmenities()
+    {
+        return _db.Suites
+            .Include(s => s.SuiteAmenities)
+            .ThenInclude(sa => sa.Amenity);
     }
 }
