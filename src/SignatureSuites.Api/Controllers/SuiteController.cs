@@ -121,7 +121,7 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
 
         var suiteNameExists = await _db.Suites.AnyAsync(v => v.Name.ToLower() == suiteUpdateDto.Name.ToLower() && v.Id != id);
 
-        if (suiteNameExists) return Conflict(ApiResponse<SuiteCreateDto>.Conflict($"A suite with the name '{suiteUpdateDto.Name}' already exists"));
+        if (suiteNameExists) return Conflict(ApiResponse<object>.Conflict($"A suite with the name '{suiteUpdateDto.Name}' already exists"));
 
         _mapper.Map(suiteUpdateDto, existingSuite);
 
