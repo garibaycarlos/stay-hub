@@ -78,7 +78,7 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     {
         if (suiteCreateDto is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
 
-        var suiteExists = await _db.Suites.AnyAsync(v => v.Name.ToLower() == suiteCreateDto.Name.ToLower());
+        var suiteExists = await _db.Suites.AnyAsync(v => v.Name == suiteCreateDto.Name);
 
         if (suiteExists) return Conflict(ApiResponse<object>.Conflict($"A suite with the name '{suiteCreateDto.Name}' already exists"));
 
@@ -115,7 +115,7 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
 
         if (existingSuite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
 
-        var suiteNameExists = await _db.Suites.AnyAsync(v => v.Name.ToLower() == suiteUpdateDto.Name.ToLower() && v.Id != id);
+        var suiteNameExists = await _db.Suites.AnyAsync(v => v.Name == suiteUpdateDto.Name && v.Id != id);
 
         if (suiteNameExists) return Conflict(ApiResponse<object>.Conflict($"A suite with the name '{suiteUpdateDto.Name}' already exists"));
 
