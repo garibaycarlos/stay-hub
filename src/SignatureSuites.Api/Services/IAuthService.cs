@@ -1,10 +1,10 @@
-﻿using SignatureSuites.Api.Models.DTO.Login;
+﻿using SignatureSuites.Api.Models.Dto.Login;
 
 namespace SignatureSuites.Api.Services;
 
 public interface IAuthService
 {
-    Task<UserDTO> RegisterAsync(RegistrationRequestDTO registrationRequestDTO);
-    Task<LoginResponseDTO> LoginAsync(LoginRequestDTO loginRequestDTO);
+    Task<UserDto> RegisterAsync(RegistrationRequestDto registrationRequestDTO);
+    Task<LoginResponseDto> LoginAsync(LoginRequestDto loginRequestDTO);
     Task<bool> EmailExistsAsync(string email);
 }

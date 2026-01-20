@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SignatureSuites.Api.Data;
 using SignatureSuites.Api.Models;
-using SignatureSuites.Api.Models.DTO.Login;
+using SignatureSuites.Api.Models.Dto.Login;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -21,7 +21,7 @@ public class AuthService(ApplicationDbContext db, IMapper mapper, IConfiguration
         return await _db.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower());
     }
 
-    public async Task<LoginResponseDTO?> LoginAsync(LoginRequestDTO loginRequestDTO)
+    public async Task<LoginResponseDto?> LoginAsync(LoginRequestDto loginRequestDTO)
     {
         try
         {
@@ -33,9 +33,9 @@ public class AuthService(ApplicationDbContext db, IMapper mapper, IConfiguration
 
             var token = GenerateJwtToken(user);
 
-            return new LoginResponseDTO
+            return new LoginResponseDto
             {
-                UserDTO = _mapper.Map<UserDTO>(user),
+                UserDto = _mapper.Map<UserDto>(user),
                 Token = token
             };
         }
@@ -45,7 +45,7 @@ public class AuthService(ApplicationDbContext db, IMapper mapper, IConfiguration
         }
     }
 
-    public async Task<UserDTO> RegisterAsync(RegistrationRequestDTO registrationRequestDTO)
+    public async Task<UserDto> RegisterAsync(RegistrationRequestDto registrationRequestDTO)
     {
         try
         {
@@ -64,7 +64,7 @@ public class AuthService(ApplicationDbContext db, IMapper mapper, IConfiguration
             await _db.Users.AddAsync(user);
             await _db.SaveChangesAsync();
 
-            return _mapper.Map<UserDTO>(user);
+            return _mapper.Map<UserDto>(user);
         }
         catch (Exception ex)
         {
