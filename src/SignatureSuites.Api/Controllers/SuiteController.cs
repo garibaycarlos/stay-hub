@@ -53,7 +53,7 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<SuiteDto>>> GetSuiteById(int id)
     {
-        if (id <= 0) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
+        if (id <= 0) return BadRequest(ApiResponse<object>.BadRequest("Invalid suite Id"));
 
         var suite = await QuerySuitesWithAmenities()
             .AsNoTracking()
@@ -73,11 +73,11 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     /// </returns>
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(ApiResponse<SuiteCreateDto>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse<SuiteDto>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<SuiteCreateDto>>> CreateSuite(SuiteCreateDto suiteCreateDto)
+    public async Task<ActionResult<ApiResponse<SuiteDto>>> CreateSuite(SuiteCreateDto suiteCreateDto)
     {
         if (suiteCreateDto is null) return BadRequest(ApiResponse<object>.BadRequest("Suite data is required"));
 
