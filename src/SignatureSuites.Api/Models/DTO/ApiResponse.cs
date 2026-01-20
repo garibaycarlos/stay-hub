@@ -1,4 +1,4 @@
-﻿namespace SignatureSuites.Api.Models.DTO;
+﻿namespace SignatureSuites.Api.Models.Dto;
 
 public class ApiResponse<TData>
 {
