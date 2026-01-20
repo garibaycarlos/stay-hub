@@ -6,16 +6,24 @@ namespace SignatureSuites.Api.Data;
 public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<Suite> Suite { get; set; }
-    public DbSet<Amenity> Amenity { get; set; }
+    public DbSet<Suite> Suites { get; set; }
+    public DbSet<Amenity> Amenities { get; set; }
     public DbSet<SuiteAmenity> SuiteAmenities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<User>().ToTable("User");
+        modelBuilder.Entity<Suite>().ToTable("Suite");
+        modelBuilder.Entity<Amenity>().ToTable("Amenity");
+
+        modelBuilder.Entity<Suite>()
+            .Property(s => s.Rate)
+            .HasPrecision(10, 2);
+
         modelBuilder.Entity<SuiteAmenity>()
-    .HasKey(pa => new { pa.SuiteId, pa.AmenityId });
+            .HasKey(pa => new { pa.SuiteId, pa.AmenityId });
 
         modelBuilder.Entity<SuiteAmenity>()
             .HasOne(pa => pa.Suite)
@@ -27,66 +35,82 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
             .WithMany(a => a.SuiteAmenities)
             .HasForeignKey(pa => pa.AmenityId);
 
+        var seedDate = new DateTime(2024, 1, 1);
+
+        // Suite seed data
         modelBuilder.Entity<Suite>().HasData(
-            new Suite
+        new Suite
+        {
+            Id = 1,
+            Name = "Royal Ocean Suite",
+            Details = "Luxury suite with private pool and ocean views.",
+            Rate = 600,
+            Sqft = 2800,
+            Occupancy = 6,
+            ImageUrl = "https://example.com/suite1.jpg",
+            CreatedDate = seedDate
+        },
+        new Suite
+        {
+            Id = 2,
+            Name = "Diamond Mountain Suite",
+            Details = "Elegant suite overlooking the mountains.",
+            Rate = 750,
+            Sqft = 3200,
+            Occupancy = 8,
+            ImageUrl = "https://example.com/suite2.jpg",
+            CreatedDate = seedDate
+        }
+    );
+
+        // Amenity seed data
+        modelBuilder.Entity<Amenity>().HasData(
+            new Amenity
             {
                 Id = 1,
-                Name = "Royal Villa",
-                Details = "Luxurious villa with stunning ocean views and private beach access.",
-                Rate = 500.0,
-                Sqft = 2500,
-                Occupancy = 6,
-                ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa1.jpg",
-                CreatedDate = new DateTime(2024, 1, 1),
-                UpdatedDate = new DateTime(2024, 1, 1)
+                Name = "Wi-Fi",
+                Description = "High-speed wireless internet",
+                CreatedDate = seedDate
             },
-            new Suite
+            new Amenity
             {
                 Id = 2,
-                Name = "Diamond Villa",
-                Details = "Elegant villa with marble interiors and panoramic mountain views.",
-                Rate = 750.0,
-                Sqft = 3200,
-                Occupancy = 8,
-                ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa2.jpg",
-                CreatedDate = new DateTime(2024, 1, 15),
-                UpdatedDate = new DateTime(2024, 1, 15)
+                Name = "Air Conditioning",
+                Description = "Climate-controlled rooms",
+                CreatedDate = seedDate
             },
-            new Suite
+            new Amenity
             {
                 Id = 3,
-                Name = "Pool Villa",
-                Details = "Modern villa featuring an infinity pool and outdoor entertainment area.",
-                Rate = 350.0,
-                Sqft = 1800,
-                Occupancy = 4,
-                ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa3.jpg",
-                CreatedDate = new DateTime(2024, 2, 1),
-                UpdatedDate = new DateTime(2024, 2, 1)
+                Name = "Private Pool",
+                Description = "Exclusive private swimming pool",
+                CreatedDate = seedDate
             },
-            new Suite
+            new Amenity
             {
                 Id = 4,
-                Name = "Luxury Villa",
-                Details = "Premium villa with spa facilities and concierge services.",
-                Rate = 900.0,
-                Sqft = 4000,
-                Occupancy = 10,
-                ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa4.jpg",
-                CreatedDate = new DateTime(2024, 2, 14),
-                UpdatedDate = new DateTime(2024, 2, 14)
+                Name = "Ocean View",
+                Description = "Unobstructed ocean views",
+                CreatedDate = seedDate
             },
-            new Suite
+            new Amenity
             {
                 Id = 5,
-                Name = "Garden Villa",
-                Details = "Charming villa surrounded by tropical gardens and nature trails.",
-                Rate = 275.0,
-                Sqft = 1500,
-                Occupancy = 3,
-                ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa5.jpg",
-                CreatedDate = new DateTime(2024, 3, 1),
-                UpdatedDate = new DateTime(2024, 3, 1)
-            });
+                Name = "Room Service",
+                Description = "24/7 in-room dining",
+                CreatedDate = seedDate
+            }
+    );
+
+        // SuiteAmenity join seed data
+        modelBuilder.Entity<SuiteAmenity>().HasData(
+            new SuiteAmenity { SuiteId = 1, AmenityId = 1, CreatedDate = seedDate },
+            new SuiteAmenity { SuiteId = 1, AmenityId = 3, CreatedDate = seedDate },
+            new SuiteAmenity { SuiteId = 1, AmenityId = 4, CreatedDate = seedDate },
+
+            new SuiteAmenity { SuiteId = 2, AmenityId = 1, CreatedDate = seedDate },
+            new SuiteAmenity { SuiteId = 2, AmenityId = 2, CreatedDate = seedDate },
+            new SuiteAmenity { SuiteId = 2, AmenityId = 5, CreatedDate = seedDate }
+        );
     }
 }

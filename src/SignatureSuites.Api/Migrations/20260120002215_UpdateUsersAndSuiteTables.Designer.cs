@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SignatureSuites.Api.Data;
 
@@ -11,9 +12,11 @@ using SignatureSuites.Api.Data;
 namespace SignatureSuites.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260120002215_UpdateUsersAndSuiteTables")]
+    partial class UpdateUsersAndSuiteTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,35 +55,35 @@ namespace SignatureSuites.Api.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 833, DateTimeKind.Utc).AddTicks(8744),
                             Description = "High-speed wireless internet",
                             Name = "Wi-Fi"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(114),
                             Description = "Climate-controlled rooms",
                             Name = "Air Conditioning"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(117),
                             Description = "Exclusive private swimming pool",
                             Name = "Private Pool"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(119),
                             Description = "Unobstructed ocean views",
                             Name = "Ocean View"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(120),
                             Description = "24/7 in-room dining",
                             Name = "Room Service"
                         });
@@ -140,7 +143,7 @@ namespace SignatureSuites.Api.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedDate = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Details = "Elegant suite overlooking the mountains.",
                             ImageUrl = "https://example.com/suite2.jpg",
                             Name = "Diamond Mountain Suite",
@@ -172,37 +175,37 @@ namespace SignatureSuites.Api.Migrations
                         {
                             SuiteId = 1,
                             AmenityId = 1,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(1109)
                         },
                         new
                         {
                             SuiteId = 1,
                             AmenityId = 3,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(1930)
                         },
                         new
                         {
                             SuiteId = 1,
                             AmenityId = 4,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(1931)
                         },
                         new
                         {
                             SuiteId = 2,
                             AmenityId = 1,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(1932)
                         },
                         new
                         {
                             SuiteId = 2,
                             AmenityId = 2,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(1933)
                         },
                         new
                         {
                             SuiteId = 2,
                             AmenityId = 5,
-                            CreatedDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedDate = new DateTime(2026, 1, 20, 0, 22, 12, 834, DateTimeKind.Utc).AddTicks(1934)
                         });
                 });
 
