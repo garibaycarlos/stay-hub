@@ -22,6 +22,7 @@ public class AmenityController(ApplicationDbContext db, IMapper mapper) : Contro
     /// <summary>
     /// Retrieves a list of all amenities.
     /// </summary>
+    /// <param name="cancellationToken">Token used to cancel the operation.</param>
     /// <returns>
     /// A standardized API response containing a collection of amenities.
     /// </returns>
@@ -42,6 +43,7 @@ public class AmenityController(ApplicationDbContext db, IMapper mapper) : Contro
     /// Retrieves a specific amenity by its unique identifier.
     /// </summary>
     /// <param name="id">The unique identifier of the amenity.</param>
+    /// <param name="cancellationToken">Token used to cancel the operation.</param>
     /// <returns>
     /// A standardized API response containing the requested amenity if found.
     /// </returns>
