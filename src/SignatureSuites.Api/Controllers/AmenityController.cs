@@ -140,7 +140,7 @@ public class AmenityController(ApplicationDbContext db, IMapper mapper) : Contro
     /// </returns>
     [HttpDelete("{id:int}")]
     [Authorize(Roles = "Admin")]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ApiResponse<object>>> DeleteAmenity(int id)
     {
