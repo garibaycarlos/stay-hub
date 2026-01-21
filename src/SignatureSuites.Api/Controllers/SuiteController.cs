@@ -27,11 +27,11 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     /// </returns>
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<SuiteDto>>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<ApiResponse<IEnumerable<SuiteDto>>>> GetAllSuites()
+    public async Task<ActionResult<ApiResponse<IEnumerable<SuiteDto>>>> GetAllSuites(CancellationToken cancellationToken)
     {
         var suites = await QuerySuitesWithAmenities()
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         var suitesDto = _mapper.Map<IEnumerable<SuiteDto>>(suites);
         var response = ApiResponse<IEnumerable<SuiteDto>>.Ok(suitesDto, "Suites retrieved successfully");
 
@@ -48,13 +48,13 @@ public class SuiteController(ApplicationDbContext db, IMapper mapper) : Controll
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(ApiResponse<SuiteDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ApiResponse<SuiteDto>>> GetSuiteById(int id)
+    public async Task<ActionResult<ApiResponse<SuiteDto>>> GetSuiteById(int id, CancellationToken cancellationToken)
     {
         if (id <= 0) return BadRequest(ApiResponse<object>.BadRequest("Invalid suite Id"));
 
         var suite = await QuerySuitesWithAmenities()
             .AsNoTracking()
-            .FirstOrDefaultAsync(s => s.Id == id);
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
         if (suite is null) return NotFound(ApiResponse<object>.NotFound($"Suite with Id {id} was not found"));
 
