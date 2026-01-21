@@ -14,26 +14,22 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>().ToTable("User");
-        modelBuilder.Entity<Suite>().ToTable("Suite");
-        modelBuilder.Entity<Amenity>().ToTable("Amenity");
-
         modelBuilder.Entity<Suite>()
             .Property(s => s.Rate)
             .HasPrecision(10, 2);
 
         modelBuilder.Entity<SuiteAmenity>()
-            .HasKey(pa => new { pa.SuiteId, pa.AmenityId });
+            .HasKey(sa => new { sa.SuiteId, sa.AmenityId });
 
         modelBuilder.Entity<SuiteAmenity>()
-            .HasOne(pa => pa.Suite)
-            .WithMany(p => p.SuiteAmenities)
-            .HasForeignKey(pa => pa.SuiteId);
+            .HasOne(sa => sa.Suite)
+            .WithMany(s => s.SuiteAmenities)
+            .HasForeignKey(sa => sa.SuiteId);
 
         modelBuilder.Entity<SuiteAmenity>()
-            .HasOne(pa => pa.Amenity)
+            .HasOne(sa => sa.Amenity)
             .WithMany(a => a.SuiteAmenities)
-            .HasForeignKey(pa => pa.AmenityId);
+            .HasForeignKey(sa => sa.AmenityId);
 
         var seedDate = new DateTime(2024, 1, 1);
 

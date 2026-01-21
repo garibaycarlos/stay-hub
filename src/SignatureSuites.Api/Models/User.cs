@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SignatureSuites.Api.Models
 {
+    [Table("User")]
     public class User
     {
         [Key]
