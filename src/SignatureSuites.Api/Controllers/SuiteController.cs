@@ -14,7 +14,6 @@ namespace SignatureSuites.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/suites")]
-[Authorize(Roles = "Admin,Customer")]
 public class SuiteController(ApplicationDbContext db, IMapper mapper) : ControllerBase
 {
     private readonly ApplicationDbContext _db = db;
